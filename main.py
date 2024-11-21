@@ -3,33 +3,35 @@ from PIL import Image
 import io
 from rembg import remove
 
+# Caminhos fixos para o fundo e a imagem adicional
+CAMINHO_NOVO_FUNDO = "fundo_padrao.png"
+CAMINHO_IMAGEM_ADICIONAL = "tarja avatar.png"
+
 app = Flask(__name__)
 
-@app.route('/alteraimagem', methods=['POST'])
+@app.route('/alterarimagem', methods=['POST'])
 def adicionar_faixa_com_nome():
-    # Verificar se os arquivos necessários foram enviados
-    if 'imagem_principal' not in request.files or 'novo_fundo' not in request.files or 'imagem_adicional' not in request.files:
-        return jsonify({"error": "Faltam arquivos obrigatórios (imagem_principal, novo_fundo ou imagem_adicional)"}), 400
+    # Verificar se a imagem principal foi enviada
+    if 'imagem_principal' not in request.files:
+        return jsonify({"error": "Arquivo 'imagem_principal' não enviado."}), 400
 
     try:
-        # Carregar os arquivos enviados
+        # Carregar a imagem principal enviada
         imagem_principal = request.files['imagem_principal'].read()
-        novo_fundo = request.files['novo_fundo']
-        imagem_adicional = request.files['imagem_adicional']
 
         # Remover fundo da imagem principal
         imagem_sem_fundo = remove(imagem_principal)
         imagem_sem_fundo = Image.open(io.BytesIO(imagem_sem_fundo)).convert("RGBA")
 
-        # Carregar e redimensionar o novo fundo
-        novo_fundo_imagem = Image.open(novo_fundo).convert("RGBA")
+        # Carregar o novo fundo fixo
+        novo_fundo_imagem = Image.open(CAMINHO_NOVO_FUNDO).convert("RGBA")
         novo_fundo_imagem = novo_fundo_imagem.resize(imagem_sem_fundo.size)
 
         # Combinar imagem sem fundo com o novo fundo
         resultado = Image.alpha_composite(novo_fundo_imagem, imagem_sem_fundo)
 
-        # Carregar a imagem adicional
-        imagem_adicional_imagem = Image.open(imagem_adicional).convert("RGBA")
+        # Carregar a imagem adicional fixa
+        imagem_adicional_imagem = Image.open(CAMINHO_IMAGEM_ADICIONAL).convert("RGBA")
 
         # Redimensionar a imagem adicional para caber na largura do resultado
         largura_resultado, altura_resultado = resultado.size

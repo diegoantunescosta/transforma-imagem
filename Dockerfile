@@ -8,7 +8,7 @@ WORKDIR /app
 COPY app.py .
 COPY requirements.txt .
 COPY fundo_padrao.png .
-COPY tarja\ avatar.png ./tarja_avatar.png
+COPY tarja_avatar.png ./tarja_avatar.png
 
 # Instalar dependências
 RUN pip install --no-cache-dir -r requirements.txt

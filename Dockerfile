@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copiar os arquivos necessários para o contêiner
-COPY app.py .
+COPY main.py .
 COPY requirements.txt .
 COPY fundo_padrao.png .
 COPY tarja_avatar.png ./tarja_avatar.png
@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Comando para iniciar a aplicação Flask
-CMD ["python", "app.py"]
+CMD ["python", "main.py"]

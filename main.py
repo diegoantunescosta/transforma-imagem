@@ -5,7 +5,7 @@ from rembg import remove
 
 # Caminhos fixos para o fundo e a imagem adicional
 CAMINHO_NOVO_FUNDO = "fundo_padrao.png"
-CAMINHO_IMAGEM_ADICIONAL = "tarja avatar.png"
+CAMINHO_IMAGEM_ADICIONAL = "tarja_avatar.png"
 
 app = Flask(__name__)
 

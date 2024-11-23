@@ -1,7 +1,7 @@
 import requests
 
 # URL da API Flask
-url = "http://127.0.0.1:5000/alterarimagem"
+url = "https://personalizaimagem-523729213609.us-central1.run.app/alterarimagem"
 
 # Caminho para o arquivo de imagem
 caminho_imagem = "processed_avatar.jpg"
